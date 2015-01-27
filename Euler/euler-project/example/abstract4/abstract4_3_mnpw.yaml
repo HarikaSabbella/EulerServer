@@ -1,0 +1,68 @@
+1.C:
+  concept: C
+  group: '1'
+  name: test31
+1.E:
+  concept: E
+  group: '1'
+  name: test23
+2.F:
+  concept: F
+  group: '2'
+  name: test55
+2.G:
+  concept: G
+  group: '2'
+  name: test58
+comb.1.A\n2.A:
+  concept: 1.A\n2.A
+  group: comb
+  name: test41
+comb.1.B\n2.B:
+  concept: 1.B\n2.B
+  group: comb
+  name: test74
+comb.1.D\n2.D:
+  concept: 1.D\n2.D
+  group: comb
+  name: test4
+1.B\n2.B_1.A\n2.A:
+  label: input
+  s: 1.B\n2.B
+  t: 1.A\n2.A
+1.C_1.A\n2.A:
+  label: input
+  s: 1.C
+  t: 1.A\n2.A
+1.C_2.F:
+  label: overlaps
+  s: 1.C
+  t: 2.F
+1.C_2.G:
+  label: overlaps
+  s: 1.C
+  t: 2.G
+1.D\n2.D_1.A\n2.A:
+  label: input
+  s: 1.D\n2.D
+  t: 1.A\n2.A
+1.E_1.A\n2.A:
+  label: input
+  s: 1.E
+  t: 1.A\n2.A
+1.E_2.F:
+  label: overlaps
+  s: 1.E
+  t: 2.F
+1.E_2.G:
+  label: overlaps
+  s: 1.E
+  t: 2.G
+2.F_1.A\n2.A:
+  label: input
+  s: 2.F
+  t: 1.A\n2.A
+2.G_1.A\n2.A:
+  label: input
+  s: 2.G
+  t: 1.A\n2.A

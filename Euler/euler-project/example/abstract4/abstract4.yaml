@@ -1,0 +1,92 @@
+1.A:
+  concept: A
+  group: '1'
+  name: test19
+1.B:
+  concept: B
+  group: '1'
+  name: test70
+1.C:
+  concept: C
+  group: '1'
+  name: test97
+1.D:
+  concept: D
+  group: '1'
+  name: test27
+1.E:
+  concept: E
+  group: '1'
+  name: test51
+2.A:
+  concept: A
+  group: '2'
+  name: test45
+2.B:
+  concept: B
+  group: '2'
+  name: test93
+2.D:
+  concept: D
+  group: '2'
+  name: test1
+2.F:
+  concept: F
+  group: '2'
+  name: test2
+2.G:
+  concept: G
+  group: '2'
+  name: test57
+1.A_2.A:
+  label: < OR ==
+  s: 1.A
+  t: 2.A
+1.B_1.A:
+  label: isa
+  s: 1.B
+  t: 1.A
+1.B_2.B:
+  label: ==
+  s: 1.B
+  t: 2.B
+1.C_1.A:
+  label: isa
+  s: 1.C
+  t: 1.A
+1.C_2.F:
+  label: < OR ><
+  s: 1.C
+  t: 2.F
+1.D_1.A:
+  label: isa
+  s: 1.D
+  t: 1.A
+1.D_2.D:
+  label: ==
+  s: 1.D
+  t: 2.D
+1.E_1.A:
+  label: isa
+  s: 1.E
+  t: 1.A
+1.E_2.G:
+  label: == OR ><
+  s: 1.E
+  t: 2.G
+2.B_2.A:
+  label: isa
+  s: 2.B
+  t: 2.A
+2.D_2.A:
+  label: isa
+  s: 2.D
+  t: 2.A
+2.F_2.A:
+  label: isa
+  s: 2.F
+  t: 2.A
+2.G_2.A:
+  label: isa
+  s: 2.G
+  t: 2.A

@@ -1,0 +1,19 @@
+strict digraph coverage_ie {
+
+rankdir = LR
+
+"3" -> "inconsistency=6,1:Set(['3', '2', '5', '4', '6'])" 
+"2" -> "inconsistency=6,1:Set(['3', '2', '5', '4', '6'])" 
+"5" -> "inconsistency=6,1:Set(['3', '2', '5', '4', '6'])" 
+"4" -> "inconsistency=6,1:Set(['3', '2', '5', '4', '6'])" 
+"6" -> "inconsistency=6,1:Set(['3', '2', '5', '4', '6'])" 
+"5" -> "inconsistency=4,2:Set(['5', '4', '6'])" 
+"4" -> "inconsistency=4,2:Set(['5', '4', '6'])" 
+"6" -> "inconsistency=4,2:Set(['5', '4', '6'])" 
+"3" -> "inconsistency=5,1:Set(['3', '2', '5', '4', '6'])" 
+"2" -> "inconsistency=5,1:Set(['3', '2', '5', '4', '6'])" 
+"5" -> "inconsistency=5,1:Set(['3', '2', '5', '4', '6'])" 
+"4" -> "inconsistency=5,1:Set(['3', '2', '5', '4', '6'])" 
+"6" -> "inconsistency=5,1:Set(['3', '2', '5', '4', '6'])" 
+graph [label="r43 : 1.C disjoint 2.D	r56 : 1.B isa 1.A	r42 : 1.B disjoint 2.D	r45 : 1.C isa 1.A	r44 : 1.B isa 1.A	r47 : 1.B disjoint 1.C	r46 : 1.A coverage	r41 : 1.B disjoint 1.C	r40 : 1.A coverage	r29 : 1.A coverage	r28 : 1.C isa 1.A	r27 : 1.B isa 1.A	r26 : 1.A includes 2.D	r25 : 1.C disjoint 2.D	r24 : 1.B disjoint 1.C	r23 : 1.A coverage	r22 : 1.C isa 1.A	r21 : 1.B isa 1.A	r20 : 1.A includes 2.D	r52 : 1.A coverage	r51 : 1.C isa 1.A	r57 : 1.C isa 1.A	r49 : 1.A includes 2.D	r53 : 1.B disjoint 1.C	r48 : 1.C disjoint 2.D	r54 : 1.B disjoint 2.D	r55 : 1.A includes 2.D	r16 : 1.A coverage	r17 : 1.B disjoint 1.C	r14 : 1.B isa 1.A	r15 : 1.C isa 1.A	r12 : 1.C disjoint 2.D	r13 : 1.A includes 2.D	r10 : 1.B disjoint 1.C	r11 : 1.B disjoint 2.D	r50 : 1.B isa 1.A	r18 : 1.B disjoint 2.D	r19 : 1.C disjoint 2.D	r58 : 1.A coverage	r59 : 1.B disjoint 1.C	r38 : 1.B isa 1.A	r39 : 1.C isa 1.A	r34 : 1.A coverage	r35 : 1.B disjoint 1.C	r36 : 1.B disjoint 2.D	r37 : 1.A includes 2.D	r30 : 1.B disjoint 1.C	r31 : 1.B disjoint 2.D	r32 : 1.B isa 1.A	r33 : 1.C isa 1.A	r4 : 1.A includes 2.D	r5 : 1.B disjoint 2.D	r6 : 1.C disjoint 2.D	r7 : 1.B isa 1.A	r0 : 1.B isa 1.A	r1 : 1.C isa 1.A	r2 : 1.A coverage	r3 : 1.B disjoint 1.C	r8 : 1.C isa 1.A	r9 : 1.A coverage	r61 : 1.C disjoint 2.D	r60 : 1.B disjoint 2.D	"]
+}

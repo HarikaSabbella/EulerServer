@@ -1,0 +1,506 @@
+%%% Max Number of Euler Regions
+#maxint=55.
+
+%%% Euler Regions
+r(M):- #int(M),M>=1,M<=#maxint.
+
+%%% Concepts
+tax(t1,0).
+concept2(A, B) :- concept(A,B,_).
+concept2(c1_A,0).
+concept(c1_C,0,0).
+concept2(c1_B,0).
+concept(c1_E,0,1).
+concept(c1_D,0,2).
+concept(c1_G,0,3).
+concept2(c1_F,0).
+concept2(c1_I,0).
+concept(c1_H,0,4).
+concept(c1_K,0,5).
+concept(c1_J,0,6).
+tax(t2,1).
+concept2(A, B) :- concept(A,B,_).
+concept2(c2_A,1).
+concept2(c2_B,1).
+concept(c2_E,1,0).
+concept(c2_G,1,1).
+concept2(c2_F,1).
+concept2(c2_I,1).
+concept(c2_H,1,2).
+concept(c2_K,1,3).
+concept(c2_J,1,4).
+concept(c2_CD,1,5).
+
+%%% Euler Bit
+bit(M, 0, V):-r(M),M1=M/1, #mod(M1,8,V).
+bit(M, 1, V):-r(M),M1=M/8, #mod(M1,7,V).
+
+
+%%% Meaning of regions
+in(X, M) :- r(M),concept(X,T,N),N1=N+1,bit(M,T,N1).
+out(X, M) :- r(M),concept(X,T,N),N1=N+1,not bit(M,T,N1).
+in(X, M) :- r(M),concept2(X,_),not out(X, M).
+out(X, M) :- out3(X, M, _), ix.
+irs(M) :- in(X, M), out(X, M), r(M), concept2(X,_).
+
+%%% Constraints of regions.
+irs(X) :- ir(X, _).
+vrs(X) :- vr(X, _).
+vr(X, X) :- not irs(X), r(X).
+ir(X, X) :- not vrs(X), r(X).
+ie(prod(A,B)) :- vr(X, A), ir(X, B), ix.
+:- vrs(X), irs(X), pw.
+
+%%% Inconsistency Explanation.
+ie(s(R, A, Y)) :- pie(R, A, Y), not cc(R, Y), ix.
+cc(R, Y) :- c(R, _, Y), ix.
+
+%%% Parent-Child relations
+%% ISA
+% c1_B isa c1_A
+ir(X, r4070) :- in(c1_B, X), out(c1_A, X), pw.
+ir(X, prod(r4070,R)) :- in(c1_B,X), out3(c1_A, X, R), ix.
+:- #count{X: vrs(X), in(c1_B, X), in(c1_A, X)} = 0, pw.
+pie(r4070, A, 1) :- ir(X, A), in(c1_B, X), in(c1_A, X), ix.
+c(r4070, A, 1) :- vr(X, A), in(c1_B, X), in(c1_A, X), ix.
+
+% c1_F isa c1_A
+ir(X, r4071) :- in(c1_F, X), out(c1_A, X), pw.
+ir(X, prod(r4071,R)) :- in(c1_F,X), out3(c1_A, X, R), ix.
+:- #count{X: vrs(X), in(c1_F, X), in(c1_A, X)} = 0, pw.
+pie(r4071, A, 1) :- ir(X, A), in(c1_F, X), in(c1_A, X), ix.
+c(r4071, A, 1) :- vr(X, A), in(c1_F, X), in(c1_A, X), ix.
+
+% c1_I isa c1_A
+ir(X, r4072) :- in(c1_I, X), out(c1_A, X), pw.
+ir(X, prod(r4072,R)) :- in(c1_I,X), out3(c1_A, X, R), ix.
+:- #count{X: vrs(X), in(c1_I, X), in(c1_A, X)} = 0, pw.
+pie(r4072, A, 1) :- ir(X, A), in(c1_I, X), in(c1_A, X), ix.
+c(r4072, A, 1) :- vr(X, A), in(c1_I, X), in(c1_A, X), ix.
+
+%% coverage
+out3(c1_A, X, r4073) :- out(c1_B, X), out(c1_F, X), out(c1_I, X), ix.
+out(c1_A, X) :- out(c1_B, X), out(c1_F, X), out(c1_I, X), pw.
+%% sibling disjointness
+% c1_B ! c1_F
+ir(X, r4074) :- in(c1_B, X), in(c1_F, X).
+:- #count{X: vrs(X), in(c1_B, X), out(c1_F, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_B, X), in(c1_F, X)} = 0, pw.
+pie(r4074, A, 1) :- ir(X, A), in(c1_B, X), out(c1_F, X), ix.
+c(r4074, A, 1) :- vr(X, A), in(c1_B, X), out(c1_F, X), ix.
+pie(r4074, A, 2) :- ir(X, A), out(c1_B, X), in(c1_F, X), ix.
+c(r4074, A, 2) :- vr(X, A), out(c1_B, X), in(c1_F, X), ix.
+
+% c1_B ! c1_I
+ir(X, r4075) :- in(c1_B, X), in(c1_I, X).
+:- #count{X: vrs(X), in(c1_B, X), out(c1_I, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_B, X), in(c1_I, X)} = 0, pw.
+pie(r4075, A, 1) :- ir(X, A), in(c1_B, X), out(c1_I, X), ix.
+c(r4075, A, 1) :- vr(X, A), in(c1_B, X), out(c1_I, X), ix.
+pie(r4075, A, 2) :- ir(X, A), out(c1_B, X), in(c1_I, X), ix.
+c(r4075, A, 2) :- vr(X, A), out(c1_B, X), in(c1_I, X), ix.
+
+% c1_F ! c1_I
+ir(X, r4076) :- in(c1_F, X), in(c1_I, X).
+:- #count{X: vrs(X), in(c1_F, X), out(c1_I, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_F, X), in(c1_I, X)} = 0, pw.
+pie(r4076, A, 1) :- ir(X, A), in(c1_F, X), out(c1_I, X), ix.
+c(r4076, A, 1) :- vr(X, A), in(c1_F, X), out(c1_I, X), ix.
+pie(r4076, A, 2) :- ir(X, A), out(c1_F, X), in(c1_I, X), ix.
+c(r4076, A, 2) :- vr(X, A), out(c1_F, X), in(c1_I, X), ix.
+
+%% ISA
+% c1_C isa c1_B
+ir(X, r4077) :- in(c1_C, X), out(c1_B, X), pw.
+ir(X, prod(r4077,R)) :- in(c1_C,X), out3(c1_B, X, R), ix.
+:- #count{X: vrs(X), in(c1_C, X), in(c1_B, X)} = 0, pw.
+pie(r4077, A, 1) :- ir(X, A), in(c1_C, X), in(c1_B, X), ix.
+c(r4077, A, 1) :- vr(X, A), in(c1_C, X), in(c1_B, X), ix.
+
+% c1_D isa c1_B
+ir(X, r4078) :- in(c1_D, X), out(c1_B, X), pw.
+ir(X, prod(r4078,R)) :- in(c1_D,X), out3(c1_B, X, R), ix.
+:- #count{X: vrs(X), in(c1_D, X), in(c1_B, X)} = 0, pw.
+pie(r4078, A, 1) :- ir(X, A), in(c1_D, X), in(c1_B, X), ix.
+c(r4078, A, 1) :- vr(X, A), in(c1_D, X), in(c1_B, X), ix.
+
+% c1_E isa c1_B
+ir(X, r4079) :- in(c1_E, X), out(c1_B, X), pw.
+ir(X, prod(r4079,R)) :- in(c1_E,X), out3(c1_B, X, R), ix.
+:- #count{X: vrs(X), in(c1_E, X), in(c1_B, X)} = 0, pw.
+pie(r4079, A, 1) :- ir(X, A), in(c1_E, X), in(c1_B, X), ix.
+c(r4079, A, 1) :- vr(X, A), in(c1_E, X), in(c1_B, X), ix.
+
+%% coverage
+out3(c1_B, X, r4080) :- out(c1_C, X), out(c1_D, X), out(c1_E, X), ix.
+out(c1_B, X) :- out(c1_C, X), out(c1_D, X), out(c1_E, X), pw.
+%% sibling disjointness
+% c1_C ! c1_D
+ir(X, r4081) :- in(c1_C, X), in(c1_D, X).
+:- #count{X: vrs(X), in(c1_C, X), out(c1_D, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_C, X), in(c1_D, X)} = 0, pw.
+pie(r4081, A, 1) :- ir(X, A), in(c1_C, X), out(c1_D, X), ix.
+c(r4081, A, 1) :- vr(X, A), in(c1_C, X), out(c1_D, X), ix.
+pie(r4081, A, 2) :- ir(X, A), out(c1_C, X), in(c1_D, X), ix.
+c(r4081, A, 2) :- vr(X, A), out(c1_C, X), in(c1_D, X), ix.
+
+% c1_C ! c1_E
+ir(X, r4082) :- in(c1_C, X), in(c1_E, X).
+:- #count{X: vrs(X), in(c1_C, X), out(c1_E, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_C, X), in(c1_E, X)} = 0, pw.
+pie(r4082, A, 1) :- ir(X, A), in(c1_C, X), out(c1_E, X), ix.
+c(r4082, A, 1) :- vr(X, A), in(c1_C, X), out(c1_E, X), ix.
+pie(r4082, A, 2) :- ir(X, A), out(c1_C, X), in(c1_E, X), ix.
+c(r4082, A, 2) :- vr(X, A), out(c1_C, X), in(c1_E, X), ix.
+
+% c1_D ! c1_E
+ir(X, r4083) :- in(c1_D, X), in(c1_E, X).
+:- #count{X: vrs(X), in(c1_D, X), out(c1_E, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_D, X), in(c1_E, X)} = 0, pw.
+pie(r4083, A, 1) :- ir(X, A), in(c1_D, X), out(c1_E, X), ix.
+c(r4083, A, 1) :- vr(X, A), in(c1_D, X), out(c1_E, X), ix.
+pie(r4083, A, 2) :- ir(X, A), out(c1_D, X), in(c1_E, X), ix.
+c(r4083, A, 2) :- vr(X, A), out(c1_D, X), in(c1_E, X), ix.
+
+%% ISA
+% c1_G isa c1_F
+ir(X, r4084) :- in(c1_G, X), out(c1_F, X), pw.
+ir(X, prod(r4084,R)) :- in(c1_G,X), out3(c1_F, X, R), ix.
+:- #count{X: vrs(X), in(c1_G, X), in(c1_F, X)} = 0, pw.
+pie(r4084, A, 1) :- ir(X, A), in(c1_G, X), in(c1_F, X), ix.
+c(r4084, A, 1) :- vr(X, A), in(c1_G, X), in(c1_F, X), ix.
+
+% c1_H isa c1_F
+ir(X, r4085) :- in(c1_H, X), out(c1_F, X), pw.
+ir(X, prod(r4085,R)) :- in(c1_H,X), out3(c1_F, X, R), ix.
+:- #count{X: vrs(X), in(c1_H, X), in(c1_F, X)} = 0, pw.
+pie(r4085, A, 1) :- ir(X, A), in(c1_H, X), in(c1_F, X), ix.
+c(r4085, A, 1) :- vr(X, A), in(c1_H, X), in(c1_F, X), ix.
+
+%% coverage
+out3(c1_F, X, r4086) :- out(c1_G, X), out(c1_H, X), ix.
+out(c1_F, X) :- out(c1_G, X), out(c1_H, X), pw.
+%% sibling disjointness
+% c1_G ! c1_H
+ir(X, r4087) :- in(c1_G, X), in(c1_H, X).
+:- #count{X: vrs(X), in(c1_G, X), out(c1_H, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_G, X), in(c1_H, X)} = 0, pw.
+pie(r4087, A, 1) :- ir(X, A), in(c1_G, X), out(c1_H, X), ix.
+c(r4087, A, 1) :- vr(X, A), in(c1_G, X), out(c1_H, X), ix.
+pie(r4087, A, 2) :- ir(X, A), out(c1_G, X), in(c1_H, X), ix.
+c(r4087, A, 2) :- vr(X, A), out(c1_G, X), in(c1_H, X), ix.
+
+%% ISA
+% c1_J isa c1_I
+ir(X, r4088) :- in(c1_J, X), out(c1_I, X), pw.
+ir(X, prod(r4088,R)) :- in(c1_J,X), out3(c1_I, X, R), ix.
+:- #count{X: vrs(X), in(c1_J, X), in(c1_I, X)} = 0, pw.
+pie(r4088, A, 1) :- ir(X, A), in(c1_J, X), in(c1_I, X), ix.
+c(r4088, A, 1) :- vr(X, A), in(c1_J, X), in(c1_I, X), ix.
+
+% c1_K isa c1_I
+ir(X, r4089) :- in(c1_K, X), out(c1_I, X), pw.
+ir(X, prod(r4089,R)) :- in(c1_K,X), out3(c1_I, X, R), ix.
+:- #count{X: vrs(X), in(c1_K, X), in(c1_I, X)} = 0, pw.
+pie(r4089, A, 1) :- ir(X, A), in(c1_K, X), in(c1_I, X), ix.
+c(r4089, A, 1) :- vr(X, A), in(c1_K, X), in(c1_I, X), ix.
+
+%% coverage
+out3(c1_I, X, r4090) :- out(c1_J, X), out(c1_K, X), ix.
+out(c1_I, X) :- out(c1_J, X), out(c1_K, X), pw.
+%% sibling disjointness
+% c1_J ! c1_K
+ir(X, r4091) :- in(c1_J, X), in(c1_K, X).
+:- #count{X: vrs(X), in(c1_J, X), out(c1_K, X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_J, X), in(c1_K, X)} = 0, pw.
+pie(r4091, A, 1) :- ir(X, A), in(c1_J, X), out(c1_K, X), ix.
+c(r4091, A, 1) :- vr(X, A), in(c1_J, X), out(c1_K, X), ix.
+pie(r4091, A, 2) :- ir(X, A), out(c1_J, X), in(c1_K, X), ix.
+c(r4091, A, 2) :- vr(X, A), out(c1_J, X), in(c1_K, X), ix.
+
+%% ISA
+% c2_B isa c2_A
+ir(X, r4092) :- in(c2_B, X), out(c2_A, X), pw.
+ir(X, prod(r4092,R)) :- in(c2_B,X), out3(c2_A, X, R), ix.
+:- #count{X: vrs(X), in(c2_B, X), in(c2_A, X)} = 0, pw.
+pie(r4092, A, 1) :- ir(X, A), in(c2_B, X), in(c2_A, X), ix.
+c(r4092, A, 1) :- vr(X, A), in(c2_B, X), in(c2_A, X), ix.
+
+% c2_F isa c2_A
+ir(X, r4093) :- in(c2_F, X), out(c2_A, X), pw.
+ir(X, prod(r4093,R)) :- in(c2_F,X), out3(c2_A, X, R), ix.
+:- #count{X: vrs(X), in(c2_F, X), in(c2_A, X)} = 0, pw.
+pie(r4093, A, 1) :- ir(X, A), in(c2_F, X), in(c2_A, X), ix.
+c(r4093, A, 1) :- vr(X, A), in(c2_F, X), in(c2_A, X), ix.
+
+% c2_I isa c2_A
+ir(X, r4094) :- in(c2_I, X), out(c2_A, X), pw.
+ir(X, prod(r4094,R)) :- in(c2_I,X), out3(c2_A, X, R), ix.
+:- #count{X: vrs(X), in(c2_I, X), in(c2_A, X)} = 0, pw.
+pie(r4094, A, 1) :- ir(X, A), in(c2_I, X), in(c2_A, X), ix.
+c(r4094, A, 1) :- vr(X, A), in(c2_I, X), in(c2_A, X), ix.
+
+%% coverage
+out3(c2_A, X, r4095) :- out(c2_B, X), out(c2_F, X), out(c2_I, X), ix.
+out(c2_A, X) :- out(c2_B, X), out(c2_F, X), out(c2_I, X), pw.
+%% sibling disjointness
+% c2_B ! c2_F
+ir(X, r4096) :- in(c2_B, X), in(c2_F, X).
+:- #count{X: vrs(X), in(c2_B, X), out(c2_F, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_B, X), in(c2_F, X)} = 0, pw.
+pie(r4096, A, 1) :- ir(X, A), in(c2_B, X), out(c2_F, X), ix.
+c(r4096, A, 1) :- vr(X, A), in(c2_B, X), out(c2_F, X), ix.
+pie(r4096, A, 2) :- ir(X, A), out(c2_B, X), in(c2_F, X), ix.
+c(r4096, A, 2) :- vr(X, A), out(c2_B, X), in(c2_F, X), ix.
+
+% c2_B ! c2_I
+ir(X, r4097) :- in(c2_B, X), in(c2_I, X).
+:- #count{X: vrs(X), in(c2_B, X), out(c2_I, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_B, X), in(c2_I, X)} = 0, pw.
+pie(r4097, A, 1) :- ir(X, A), in(c2_B, X), out(c2_I, X), ix.
+c(r4097, A, 1) :- vr(X, A), in(c2_B, X), out(c2_I, X), ix.
+pie(r4097, A, 2) :- ir(X, A), out(c2_B, X), in(c2_I, X), ix.
+c(r4097, A, 2) :- vr(X, A), out(c2_B, X), in(c2_I, X), ix.
+
+% c2_F ! c2_I
+ir(X, r4098) :- in(c2_F, X), in(c2_I, X).
+:- #count{X: vrs(X), in(c2_F, X), out(c2_I, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_F, X), in(c2_I, X)} = 0, pw.
+pie(r4098, A, 1) :- ir(X, A), in(c2_F, X), out(c2_I, X), ix.
+c(r4098, A, 1) :- vr(X, A), in(c2_F, X), out(c2_I, X), ix.
+pie(r4098, A, 2) :- ir(X, A), out(c2_F, X), in(c2_I, X), ix.
+c(r4098, A, 2) :- vr(X, A), out(c2_F, X), in(c2_I, X), ix.
+
+%% ISA
+% c2_CD isa c2_B
+ir(X, r4099) :- in(c2_CD, X), out(c2_B, X), pw.
+ir(X, prod(r4099,R)) :- in(c2_CD,X), out3(c2_B, X, R), ix.
+:- #count{X: vrs(X), in(c2_CD, X), in(c2_B, X)} = 0, pw.
+pie(r4099, A, 1) :- ir(X, A), in(c2_CD, X), in(c2_B, X), ix.
+c(r4099, A, 1) :- vr(X, A), in(c2_CD, X), in(c2_B, X), ix.
+
+% c2_E isa c2_B
+ir(X, r4100) :- in(c2_E, X), out(c2_B, X), pw.
+ir(X, prod(r4100,R)) :- in(c2_E,X), out3(c2_B, X, R), ix.
+:- #count{X: vrs(X), in(c2_E, X), in(c2_B, X)} = 0, pw.
+pie(r4100, A, 1) :- ir(X, A), in(c2_E, X), in(c2_B, X), ix.
+c(r4100, A, 1) :- vr(X, A), in(c2_E, X), in(c2_B, X), ix.
+
+%% coverage
+out3(c2_B, X, r4101) :- out(c2_CD, X), out(c2_E, X), ix.
+out(c2_B, X) :- out(c2_CD, X), out(c2_E, X), pw.
+%% sibling disjointness
+% c2_CD ! c2_E
+ir(X, r4102) :- in(c2_CD, X), in(c2_E, X).
+:- #count{X: vrs(X), in(c2_CD, X), out(c2_E, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_CD, X), in(c2_E, X)} = 0, pw.
+pie(r4102, A, 1) :- ir(X, A), in(c2_CD, X), out(c2_E, X), ix.
+c(r4102, A, 1) :- vr(X, A), in(c2_CD, X), out(c2_E, X), ix.
+pie(r4102, A, 2) :- ir(X, A), out(c2_CD, X), in(c2_E, X), ix.
+c(r4102, A, 2) :- vr(X, A), out(c2_CD, X), in(c2_E, X), ix.
+
+%% ISA
+% c2_G isa c2_F
+ir(X, r4103) :- in(c2_G, X), out(c2_F, X), pw.
+ir(X, prod(r4103,R)) :- in(c2_G,X), out3(c2_F, X, R), ix.
+:- #count{X: vrs(X), in(c2_G, X), in(c2_F, X)} = 0, pw.
+pie(r4103, A, 1) :- ir(X, A), in(c2_G, X), in(c2_F, X), ix.
+c(r4103, A, 1) :- vr(X, A), in(c2_G, X), in(c2_F, X), ix.
+
+% c2_H isa c2_F
+ir(X, r4104) :- in(c2_H, X), out(c2_F, X), pw.
+ir(X, prod(r4104,R)) :- in(c2_H,X), out3(c2_F, X, R), ix.
+:- #count{X: vrs(X), in(c2_H, X), in(c2_F, X)} = 0, pw.
+pie(r4104, A, 1) :- ir(X, A), in(c2_H, X), in(c2_F, X), ix.
+c(r4104, A, 1) :- vr(X, A), in(c2_H, X), in(c2_F, X), ix.
+
+% c2_J isa c2_F
+ir(X, r4105) :- in(c2_J, X), out(c2_F, X), pw.
+ir(X, prod(r4105,R)) :- in(c2_J,X), out3(c2_F, X, R), ix.
+:- #count{X: vrs(X), in(c2_J, X), in(c2_F, X)} = 0, pw.
+pie(r4105, A, 1) :- ir(X, A), in(c2_J, X), in(c2_F, X), ix.
+c(r4105, A, 1) :- vr(X, A), in(c2_J, X), in(c2_F, X), ix.
+
+%% coverage
+out3(c2_F, X, r4106) :- out(c2_G, X), out(c2_H, X), out(c2_J, X), ix.
+out(c2_F, X) :- out(c2_G, X), out(c2_H, X), out(c2_J, X), pw.
+%% sibling disjointness
+% c2_G ! c2_H
+ir(X, r4107) :- in(c2_G, X), in(c2_H, X).
+:- #count{X: vrs(X), in(c2_G, X), out(c2_H, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_G, X), in(c2_H, X)} = 0, pw.
+pie(r4107, A, 1) :- ir(X, A), in(c2_G, X), out(c2_H, X), ix.
+c(r4107, A, 1) :- vr(X, A), in(c2_G, X), out(c2_H, X), ix.
+pie(r4107, A, 2) :- ir(X, A), out(c2_G, X), in(c2_H, X), ix.
+c(r4107, A, 2) :- vr(X, A), out(c2_G, X), in(c2_H, X), ix.
+
+% c2_G ! c2_J
+ir(X, r4108) :- in(c2_G, X), in(c2_J, X).
+:- #count{X: vrs(X), in(c2_G, X), out(c2_J, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_G, X), in(c2_J, X)} = 0, pw.
+pie(r4108, A, 1) :- ir(X, A), in(c2_G, X), out(c2_J, X), ix.
+c(r4108, A, 1) :- vr(X, A), in(c2_G, X), out(c2_J, X), ix.
+pie(r4108, A, 2) :- ir(X, A), out(c2_G, X), in(c2_J, X), ix.
+c(r4108, A, 2) :- vr(X, A), out(c2_G, X), in(c2_J, X), ix.
+
+% c2_H ! c2_J
+ir(X, r4109) :- in(c2_H, X), in(c2_J, X).
+:- #count{X: vrs(X), in(c2_H, X), out(c2_J, X)} = 0, pw.
+:- #count{X: vrs(X), out(c2_H, X), in(c2_J, X)} = 0, pw.
+pie(r4109, A, 1) :- ir(X, A), in(c2_H, X), out(c2_J, X), ix.
+c(r4109, A, 1) :- vr(X, A), in(c2_H, X), out(c2_J, X), ix.
+pie(r4109, A, 2) :- ir(X, A), out(c2_H, X), in(c2_J, X), ix.
+c(r4109, A, 2) :- vr(X, A), out(c2_H, X), in(c2_J, X), ix.
+
+%% ISA
+% c2_K isa c2_I
+ir(X, r4110) :- in(c2_K, X), out(c2_I, X), pw.
+ir(X, prod(r4110,R)) :- in(c2_K,X), out3(c2_I, X, R), ix.
+:- #count{X: vrs(X), in(c2_K, X), in(c2_I, X)} = 0, pw.
+pie(r4110, A, 1) :- ir(X, A), in(c2_K, X), in(c2_I, X), ix.
+c(r4110, A, 1) :- vr(X, A), in(c2_K, X), in(c2_I, X), ix.
+
+%% coverage
+out3(c2_I, X, r4111) :- out(c2_K, X), ix.
+out(c2_I, X) :- out(c2_K, X), pw.
+%% sibling disjointness
+
+%%% Articulations
+% 1.A is_included_in 2.A
+:- #count{X: vrs(X), in(c1_A,X), in(c2_A,X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_A,X), in(c2_A,X)} = 0, pw.
+ir(X, r4112) :- in(c1_A,X), out(c2_A,X), pw.
+pie(r4112, A, 1) :- ir(X, A), out(c1_A, X), in(c2_A, X), ix.
+c(r4112, A, 1) :- vr(X, A), out(c1_A, X), in(c2_A, X), ix.
+
+pie(r4112, A, 2) :- ir(X, A), in(c1_A, X), in(c2_A, X), ix.
+c(r4112, A, 2) :- vr(X, A), in(c1_A, X), in(c2_A, X), ix.
+
+
+% 1.B equals 2.B
+ir(X, r4113) :- out(c1_B,X), in(c2_B,X).
+ir(X, r4113) :- in(c1_B,X), out(c2_B,X).
+ir(X, prod(r4113,R)) :- out3(c1_B, X, R), in(c2_B,X), ix.
+ir(X, prod(r4113,R)) :- in(c1_B,X), out3(c2_B, X, R), ix.
+:- #count{X: vrs(X), in(c1_B,X), in(c2_B,X)} = 0, pw.
+pie(r4113, A, 1) :- ir(X, A), in(c1_B, X), in(c2_B, X), ix.
+c(r4113, A, 1) :- vr(X, A), in(c1_B, X), in(c2_B, X), ix.
+
+
+% 1.F is_included_in 2.F
+:- #count{X: vrs(X), in(c1_F,X), in(c2_F,X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_F,X), in(c2_F,X)} = 0, pw.
+ir(X, r4114) :- in(c1_F,X), out(c2_F,X), pw.
+pie(r4114, A, 1) :- ir(X, A), out(c1_F, X), in(c2_F, X), ix.
+c(r4114, A, 1) :- vr(X, A), out(c1_F, X), in(c2_F, X), ix.
+
+pie(r4114, A, 2) :- ir(X, A), in(c1_F, X), in(c2_F, X), ix.
+c(r4114, A, 2) :- vr(X, A), in(c1_F, X), in(c2_F, X), ix.
+
+
+% 1.I includes 2.I
+ir(X, r4115) :- out(c1_I,X), in(c2_I,X), pw.
+ir(X, prod(r4115,R)) :- out3(c1_I, X, R), in(c2_I,X), ix.
+:- #count{X: vrs(X), in(c1_I,X), in(c2_I,X)} = 0, pw.
+:- #count{X: vrs(X), in(c1_I,X), out(c2_I,X)} = 0, pw.
+pie(r4115, A, 1) :- ir(X, A), in(c1_I, X), out(c2_I, X), ix.
+c(r4115, A, 1) :- vr(X, A), in(c1_I, X), out(c2_I, X), ix.
+
+pie(r4115, A, 2) :- ir(X, A), in(c1_I, X), in(c2_I, X), ix.
+c(r4115, A, 2) :- vr(X, A), in(c1_I, X), in(c2_I, X), ix.
+
+
+% 1.C 1.D lsum 2.CD
+:- #count{X: vrs(X), out(c1_C,X), in(c2_CD,X)} = 0, pw.
+:- #count{X: vrs(X), in(c1_C,X), in(c2_CD,X)} = 0, pw.
+:- #count{X: vrs(X), out(c1_D,X), in(c2_CD,X)} = 0, pw.
+:- #count{X: vrs(X), in(c1_D,X), in(c2_CD,X)} = 0, pw.
+pie(r4116, A, 1) :- ir(X, A), out(c1_C, X), in(c2_CD, X), ix.
+c(r4116, A, 1) :- vr(X, A), out(c1_C, X), in(c2_CD, X), ix.
+
+pie(r4116, A, 2) :- ir(X, A), in(c1_C, X), in(c2_CD, X), ix.
+c(r4116, A, 2) :- vr(X, A), in(c1_C, X), in(c2_CD, X), ix.
+
+pie(r4116, A, 3) :- ir(X, A), out(c1_D, X), in(c2_CD, X), ix.
+c(r4116, A, 3) :- vr(X, A), out(c1_D, X), in(c2_CD, X), ix.
+
+pie(r4116, A, 4) :- ir(X, A), in(c1_D, X), in(c2_CD, X), ix.
+c(r4116, A, 4) :- vr(X, A), in(c1_D, X), in(c2_CD, X), ix.
+
+ir(X, r4116) :- in(c1_C,X), out(c2_CD,X), pw.
+ir(X, r4116) :- in(c1_D,X), out(c2_CD,X), pw.
+
+% 1.E equals 2.E
+ir(X, r4117) :- out(c1_E,X), in(c2_E,X).
+ir(X, r4117) :- in(c1_E,X), out(c2_E,X).
+ir(X, prod(r4117,R)) :- out3(c1_E, X, R), in(c2_E,X), ix.
+ir(X, prod(r4117,R)) :- in(c1_E,X), out3(c2_E, X, R), ix.
+:- #count{X: vrs(X), in(c1_E,X), in(c2_E,X)} = 0, pw.
+pie(r4117, A, 1) :- ir(X, A), in(c1_E, X), in(c2_E, X), ix.
+c(r4117, A, 1) :- vr(X, A), in(c1_E, X), in(c2_E, X), ix.
+
+
+% 1.G equals 2.G
+ir(X, r4118) :- out(c1_G,X), in(c2_G,X).
+ir(X, r4118) :- in(c1_G,X), out(c2_G,X).
+ir(X, prod(r4118,R)) :- out3(c1_G, X, R), in(c2_G,X), ix.
+ir(X, prod(r4118,R)) :- in(c1_G,X), out3(c2_G, X, R), ix.
+:- #count{X: vrs(X), in(c1_G,X), in(c2_G,X)} = 0, pw.
+pie(r4118, A, 1) :- ir(X, A), in(c1_G, X), in(c2_G, X), ix.
+c(r4118, A, 1) :- vr(X, A), in(c1_G, X), in(c2_G, X), ix.
+
+
+% 1.H equals 2.H
+ir(X, r4119) :- out(c1_H,X), in(c2_H,X).
+ir(X, r4119) :- in(c1_H,X), out(c2_H,X).
+ir(X, prod(r4119,R)) :- out3(c1_H, X, R), in(c2_H,X), ix.
+ir(X, prod(r4119,R)) :- in(c1_H,X), out3(c2_H, X, R), ix.
+:- #count{X: vrs(X), in(c1_H,X), in(c2_H,X)} = 0, pw.
+pie(r4119, A, 1) :- ir(X, A), in(c1_H, X), in(c2_H, X), ix.
+c(r4119, A, 1) :- vr(X, A), in(c1_H, X), in(c2_H, X), ix.
+
+
+% 1.J equals 2.J
+ir(X, r4120) :- out(c1_J,X), in(c2_J,X).
+ir(X, r4120) :- in(c1_J,X), out(c2_J,X).
+ir(X, prod(r4120,R)) :- out3(c1_J, X, R), in(c2_J,X), ix.
+ir(X, prod(r4120,R)) :- in(c1_J,X), out3(c2_J, X, R), ix.
+:- #count{X: vrs(X), in(c1_J,X), in(c2_J,X)} = 0, pw.
+pie(r4120, A, 1) :- ir(X, A), in(c1_J, X), in(c2_J, X), ix.
+c(r4120, A, 1) :- vr(X, A), in(c1_J, X), in(c2_J, X), ix.
+
+
+% 1.K equals 2.K
+ir(X, r4121) :- out(c1_K,X), in(c2_K,X).
+ir(X, r4121) :- in(c1_K,X), out(c2_K,X).
+ir(X, prod(r4121,R)) :- out3(c1_K, X, R), in(c2_K,X), ix.
+ir(X, prod(r4121,R)) :- in(c1_K,X), out3(c2_K, X, R), ix.
+:- #count{X: vrs(X), in(c1_K,X), in(c2_K,X)} = 0, pw.
+pie(r4121, A, 1) :- ir(X, A), in(c1_K, X), in(c2_K, X), ix.
+c(r4121, A, 1) :- vr(X, A), in(c1_K, X), in(c2_K, X), ix.
+
+
+%%% Decoding now
+:- rel(X, Y, "="), rel(X, Y, "<"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "="), rel(X, Y, ">"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "="), rel(X, Y, "><"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "="), rel(X, Y, "!"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "<"), rel(X, Y, ">"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "<"), rel(X, Y, "><"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "<"), rel(X, Y, "!"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, ">"), rel(X, Y, "><"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, ">"), rel(X, Y, "!"), concept2(X, N1), concept2(Y, N2), pw.
+:- rel(X, Y, "><"), rel(X, Y, "!"), concept2(X, N1), concept2(Y, N2), pw.
+:- not rel(X, Y, "="), not rel(X, Y, "<"), not rel(X, Y, ">"), not rel(X, Y, "><"), not rel(X, Y, "!"), concept2(X, N1), concept2(Y, N2), N1 < N2, not ncf(X), not ncf(Y), pw.
+
+rel(X, Y, "=") :- not hint(X, Y, 0), hint(X, Y, 1), not hint(X, Y, 2), pw.
+rel(X, Y, "<") :- not hint(X, Y, 0), hint(X, Y, 1), hint(X, Y, 2), pw.
+rel(X, Y, ">") :- hint(X, Y, 0), hint(X, Y, 1), not hint(X, Y, 2), pw.
+rel(X, Y, "><") :- hint(X, Y, 0), hint(X, Y, 1), hint(X, Y, 2), pw.
+rel(X, Y, "!") :- hint(X, Y, 0), not hint(X, Y, 1), hint(X, Y, 2), pw.
+
+
+hint(X, Y, 0) :- concept2(X, N1), concept2(Y, N2), N1 < N2, vrs(R), in(X, R), out(Y, R), not ncf(X), not ncf(Y), pw.
+hint(X, Y, 1) :- concept2(X, N1), concept2(Y, N2), N1 < N2, vrs(R), in(X, R), in(Y, R), not ncf(X), not ncf(Y), pw.
+hint(X, Y, 2) :- concept2(X, N1), concept2(Y, N2), N1 < N2, vrs(R), out(X, R), in(Y, R), not ncf(X), not ncf(Y), pw.
+

@@ -1,0 +1,61 @@
+digraph{
+rankdir=RL
+node[shape=box style="filled" fillcolor="#CCFFCC"] 
+"1.E"
+"1.A"
+"1.C"
+node[shape=octagon style=filled fillcolor="#FFFFCC"] 
+"2.A"
+"2.G"
+"2.F"
+node[shape=Msquare style="filled" fillcolor="#EEEEEE"] 
+"1.D\n2.D"
+"1.B\n2.B"
+edge[arrowhead=none style=dotted color="#0000FF" constraint=true penwidth=1]
+"1.C" -> "2.F"
+"1.A" -> "2.F"
+"1.A" -> "2.G"
+"1.C" -> "2.G"
+"1.E" -> "2.F"
+"1.E" -> "2.G"
+edge[arrowhead=normal style=solid color="#000000" constraint=true penwidth=1]
+"1.C" -> "1.A"
+"1.B\n2.B" -> "1.A"
+"2.F" -> "2.A"
+"2.G" -> "2.A"
+"1.E" -> "1.A"
+"1.D\n2.D" -> "1.A"
+edge[arrowhead=normal style=solid color="#FF0000" constraint=true penwidth=1]
+"1.A" -> "2.A"
+node[shape=box] 
+{rank=min Legend [fillcolor= white margin=0 label=< 
+ <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"> 
+<TR> <TD COLSPAN="2"><font face="Arial Black"> Nodes</font></TD> </TR> 
+<TR> 
+ <TD bgcolor="#CCFFCC">1</TD> 
+ <TD>3</TD> 
+ </TR> 
+<TR> 
+ <TD bgcolor="#FFFFCC">2</TD> 
+ <TD>3</TD> 
+ </TR> 
+<TR> 
+ <TD bgcolor="#EEEEEE">comb</TD> 
+ <TD>2</TD> 
+ </TR> 
+<TR> <TD COLSPAN="2"><font face = "Arial Black"> Edges </font></TD> </TR> 
+<TR> 
+ <TD><font color ="#0000FF">overlaps</font></TD> 
+ <TD>6</TD> 
+ </TR> 
+<TR> 
+ <TD><font color ="#000000">input</font></TD> 
+ <TD>6</TD> 
+ </TR> 
+<TR> 
+ <TD><font color ="#FF0000">inferred</font></TD> 
+ <TD>1</TD> 
+ </TR> 
+</TABLE> 
+ >] } 
+}

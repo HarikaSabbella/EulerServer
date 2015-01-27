@@ -1,0 +1,7 @@
+Input is inconsistent!!
+Please see file3_ie.pdf for the inconsistency relations between all the rules.
+Set([ImmutableSet(['8', '5', '4', '7', '6']), ImmutableSet(['3', '2', '4', '7', '6', '8']), ImmutableSet(['3', '2', '5', '7', '6', '8'])])
+Set(['3', '2', '5', '4', '7', '6', '8'])
+************************************
+Min inconsistent subset  0 : [ 7 : 1.B disjoint 2.D , 8 : 1.C disjoint 2.D , 6 : 1.A includes 2.D ]
+************************************

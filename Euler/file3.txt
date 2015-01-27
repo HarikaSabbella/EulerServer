@@ -1,0 +1,37 @@
+taxonomy 2 Taxonomy2
+(E)
+(F G H J)
+(G)
+(A F B I)
+(B E CD)
+(CD)
+(H)
+(I K)
+(J)
+(K)
+taxonomy 1 Taxonomy1
+(D)
+(E)
+(F G H)
+(G)
+(A F B I)
+(B D E C)
+(C)
+(H)
+(I J K)
+(J)
+(K)
+
+articulation tw1 tw1
+[1.I 1.J lsum 2.K]
+[1.C 1.D lsum 2.CD]
+[1.F 2.J lsum 2.F]
+[1.A is_included_in 2.A]
+[1.B equals 2.B]
+[1.E equals 2.E]
+[1.F is_included_in 2.F]
+[1.G equals 2.G]
+[1.H equals 2.H]
+[1.I includes 2.I]
+[1.J equals 2.J]
+[1.K equals 2.K]

@@ -1,0 +1,43 @@
+1, 2:
+  name: 1, 2
+  type: shape=box color="#00FF00" style="rounded,filled"
+1, 3:
+  name: 1, 3
+  type: shape=box color="#00FF00" style="rounded,filled"
+2, 3:
+  name: 2, 3
+  type: shape=box color="#00FF00" style="rounded,filled"
+2, 3, 1:
+  name: 2, 3, 1
+  type: shape=octagon color="#FF0000" style="filled"
+AllOtherGreen:
+  name: AllOtherGreen
+  type: shape=box color="#00FF00" style="rounded,dashed"
+1, 2_AllOtherGreen:
+  s: 1, 2
+  t: AllOtherGreen
+  type: color=green, style=dashed, label=2
+1, 3_AllOtherGreen:
+  s: 1, 3
+  t: AllOtherGreen
+  type: color=green, style=dashed, label=2
+2, 3, 1_1, 2:
+  s: 2, 3, 1
+  t: 1, 2
+  type: color=blue, arrowhead=none, label=1
+2, 3, 1_1, 3:
+  s: 2, 3, 1
+  t: 1, 3
+  type: color=blue, arrowhead=none, label=1
+2, 3, 1_2, 3:
+  s: 2, 3, 1
+  t: 2, 3
+  type: color=blue, arrowhead=none, label=1
+2, 3, 1_AllOtherGreen:
+  s: 2, 3, 1
+  t: AllOtherGreen
+  type: color=blue, arrowhead=none, label=3
+2, 3_AllOtherGreen:
+  s: 2, 3
+  t: AllOtherGreen
+  type: color=green, style=dashed, label=2

@@ -1,0 +1,28 @@
+1.A:
+  concept: A
+  group: '1'
+  name: test1
+1.B:
+  concept: B
+  group: '1'
+  name: test8
+1.C:
+  concept: C
+  group: '1'
+  name: test89
+2.D:
+  concept: D
+  group: '2'
+  name: test62
+1.B_1.A:
+  label: input
+  s: 1.B
+  t: 1.A
+1.C_1.A:
+  label: input
+  s: 1.C
+  t: 1.A
+2.D_1.C:
+  label: inferred
+  s: 2.D
+  t: 1.C

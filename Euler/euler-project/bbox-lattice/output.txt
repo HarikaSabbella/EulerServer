@@ -1,0 +1,7 @@
+Input is inconsistent!!
+Please see coverage_ie.pdf for the inconsistency relations between all the rules.
+Set([ImmutableSet(['5', '4', '6'])])
+Set(['5', '4', '6'])
+************************************
+Min inconsistent subset  0 : [ 5 : 1.B disjoint 2.D , 6 : 1.C disjoint 2.D , 4 : 1.A includes 2.D ]
+************************************
