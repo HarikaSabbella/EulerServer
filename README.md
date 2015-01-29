@@ -14,7 +14,7 @@ In the ShowGraphs activity, using an HttpUrlConnection object, the content from 
 we would have stored the following:
 [1, [[A, []], [C, [A]]]], [2, [D, []]] into the hashmap of hashmaps.   Using another hashmap, we map each node’s label with a DiagramNode object (used to later draw edges between nodes by looking up nodes based on labels).  Then, DiagramNode objects and “isa” DiagramLink objects are created and placed onto the Diagram object.  Finally, we process all of the edges that have other articulations and place those onto the Diagram object as well and at this point, we have a complete visualization of the input Yaml file.  
 
-<em> To handle user input: </em>
+<strong> To handle user input: </strong>
 
 Using a SharedPreferences object we store all of the articulations and we modify this object whenever the user clicks on the “Modify Available Articulations” selection under “Modify Diagram.”  This object is also used to set up the articulations ListView object when the user clicks on the “Add New Edge” selection or when the user clicks on an edge (there are listener objects that detect when an edge or a node is clicked) to change the present articulations on that edge.  
 
